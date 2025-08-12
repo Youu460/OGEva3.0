@@ -54,7 +54,7 @@ async def start(client, message):
           return
     if len(message.command) == 2 and message.command[1] in ["subscribe", "error", "okay", "help"]:
         buttons = [
-                InlineKeyboardButton('🖥 Oᴛᴛ Uᴘᴅᴀᴛᴇ Cʜᴀɴɴᴇʟ 🖥', url=f'https://t.me/+5iw_dWArjYg2YTBl')
+                InlineKeyboardButton('🖥 Oᴛᴛ Uᴘᴅᴀᴛᴇ Cʜᴀɴɴᴇʟ 🖥', url=f'https://t.me/+KJHSwIdswKUwZjU1')
                ],[
                 InlineKeyboardButton('⚙ Bᴏᴛ Mᴏᴠɪᴇ Gʀᴏᴜᴘ ⚙', url=f'https://t.me/+DewZ33fYpEYxYWZl')
               ],[
