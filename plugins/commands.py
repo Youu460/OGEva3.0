@@ -31,13 +31,17 @@ async def start(client, message):
         await db.add_user(message.from_user.id, message.from_user.first_name)
         await client.send_message(LOG_CHANNEL, script.LOG_TEXT_P.format(message.from_user.id, message.from_user.mention))
     if len(message.command) != 2:
-        buttons = [[            
-            InlineKeyboardButton('🆘 Help ', callback_data='help'),
-            InlineKeyboardButton('🧑🏻‍💻 ᴅᴇᴠᴇʟᴏᴘᴇʀ', url=f"https://t.me/+QbWh1eEL0v4wM2Zl")
-        ]]
+        buttons = [
+                InlineKeyboardButton('🖥 Oᴛᴛ Uᴘᴅᴀᴛᴇ Cʜᴀɴɴᴇʟ 🖥', url=f'https://t.me/+5iw_dWArjYg2YTBl')
+               ],[
+                InlineKeyboardButton('⚙ Bᴏᴛ Mᴏᴠɪᴇ Gʀᴏᴜᴘ ⚙', url=f'https://www.instagram.com/new_ott__updates?igsh=enI5ZzIzcXuzd3Bl')
+              ],[
+                InlineKeyboardButton('⚓️ Lᴀᴛᴇꜱᴛ Mᴏᴠɪᴇ Rᴇʟᴇᴀꜱᴇ  ⚓️', url="https://t.me/+5iw_dWArjYg2YTBl"),
+        ]       
         reply_markup = InlineKeyboardMarkup(buttons)
-        await message.reply(
-            text=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
+        await message.reply_video(
+            video="https://envs.sh/dYX.mp4",
+            caption=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
             reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
         )
@@ -49,13 +53,17 @@ async def start(client, message):
     if not status:
           return
     if len(message.command) == 2 and message.command[1] in ["subscribe", "error", "okay", "help"]:
-        buttons = [[            
-            InlineKeyboardButton('🆘 Help ', callback_data='help'),
-            InlineKeyboardButton('🧑🏻‍💻 ᴅᴇᴠᴇʟᴏᴘᴇʀ', url=f"https://t.me/+QbWh1eEL0v4wM2Zl")
-        ]]
+        buttons = [
+                InlineKeyboardButton('🖥 Oᴛᴛ Uᴘᴅᴀᴛᴇ Cʜᴀɴɴᴇʟ 🖥', url=f'https://t.me/+5iw_dWArjYg2YTBl')
+               ],[
+                InlineKeyboardButton('⚙ Bᴏᴛ Mᴏᴠɪᴇ Gʀᴏᴜᴘ ⚙', url=f'https://www.instagram.com/new_ott__updates?igsh=enI5ZzIzcXuzd3Bl')
+              ],[
+                InlineKeyboardButton('⚓️ Lᴀᴛᴇꜱᴛ Mᴏᴠɪᴇ Rᴇʟᴇᴀꜱᴇ  ⚓️', url="https://t.me/+5iw_dWArjYg2YTBl"),
+        ]       
         reply_markup = InlineKeyboardMarkup(buttons)
-        await message.reply(
-            text=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
+        await message.reply_video(
+            video="https://envs.sh/dYX.mp4",
+            caption=script.START_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
             reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
         )
