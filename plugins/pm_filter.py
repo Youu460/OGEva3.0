@@ -372,16 +372,19 @@ async def cb_handler(client: Client, query: CallbackQuery):
     elif query.data == "pages":
         await query.answer('DONTOUCH🚫')
     elif query.data == "start":
-        buttons = [[            
-            InlineKeyboardButton(' 🆘 Help ', callback_data='help'),
-            InlineKeyboardButton('🧑🏻‍💻 ᴅᴇᴠᴇʟᴏᴘᴇʀ', url=f"https://t.me/+QbWh1eEL0v4wM2Zl")
-        ]]
+        buttons = [
+               InlineKeyboardButton(''🖥 Oᴛᴛ Uᴘᴅᴀᴛᴇ Cʜᴀɴɴᴇʟ 🖥', url=f'https://t.me/+5iw_dWArjYg2YTBl')
+               ],[
+                InlineKeyboardButton('⚙ Bᴏᴛ Mᴏᴠɪᴇ Gʀᴏᴜᴘ ⚙', url=f'https://www.instagram.com/new_ott__updates?igsh=enI5ZzIzcXuzd3Bl')
+              ],[
+                InlineKeyboardButton('⚓️ Lᴀᴛᴇꜱᴛ Mᴏᴠɪᴇ Rᴇʟᴇᴀꜱᴇ  ⚓️', url="https://t.me/+5iw_dWArjYg2YTBl"),
+        ]       
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
             text=script.START_TXT.format(query.from_user.mention, temp.U_NAME, temp.B_NAME),
             reply_markup=reply_markup,
             parse_mode=enums.ParseMode.HTML
-        )
+            )
         await query.answer('Piracy Is Crime')
     elif query.data == "help":
         buttons = [[
