@@ -373,7 +373,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         await query.answer('DONTOUCH🚫')
     elif query.data == "start":
         buttons = [
-               InlineKeyboardButton(''🖥 Oᴛᴛ Uᴘᴅᴀᴛᴇ Cʜᴀɴɴᴇʟ 🖥', url=f'https://t.me/+5iw_dWArjYg2YTBl')
+               InlineKeyboardButton('🖥 Oᴛᴛ Uᴘᴅᴀᴛᴇ Cʜᴀɴɴᴇʟ 🖥', url=f'https://t.me/+5iw_dWArjYg2YTBl')
                ],[
                 InlineKeyboardButton('⚙ Bᴏᴛ Mᴏᴠɪᴇ Gʀᴏᴜᴘ ⚙', url=f'https://www.instagram.com/new_ott__updates?igsh=enI5ZzIzcXuzd3Bl')
               ],[
