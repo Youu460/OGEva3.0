@@ -1,20 +1,15 @@
 # file: plugins/inline.py
-"""
-Inline query handler with a persistent channel URL button and a clean reply markup.
-- Fixes broken string ("Search again") that was split across lines.
-- Ensures InlineKeyboardMarkup is returned correctly.
-- Temporarily forces cache_time=0 in query.answer for testing to bypass Telegram inline cache.
-  Set FORCE_FRESH_CACHE = False once verified.
-"""
 
 import logging
-from pyrogram import Client, emoji, filters  # filters may be used elsewhere
+from pyrogram import Client, emoji, filters
 from pyrogram.errors.exceptions.bad_request_400 import QueryIdInvalid
 from pyrogram.types import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
     InlineQueryResultCachedDocument,
+    InlineQueryResultArticle,
     InlineQuery,
+    InputTextMessageContent,
 )
 from database.ia_filterdb import get_search_results
 from utils import is_subscribed, get_size, temp
@@ -22,11 +17,8 @@ from info import CACHE_TIME, AUTH_USERS, AUTH_CHANNEL, CUSTOM_FILE_CAPTION
 
 logger = logging.getLogger(__name__)
 
-# When AUTH gating exists, default cache_time is already 0 in original code.
 cache_time = 0 if AUTH_USERS or AUTH_CHANNEL else CACHE_TIME
-
-# Toggle this to True while testing to bypass Telegram's inline cache.
-FORCE_FRESH_CACHE = True
+FORCE_FRESH_CACHE = True  # set False later after testing
 
 
 async def inline_users(query: InlineQuery):
@@ -82,6 +74,24 @@ async def answer(bot, query):
         offset=offset,
     )
 
+    # --- Add Summary Box First ---
+    summary_caption = (
+        f"🍂 **Movie Name :** {string or 'N/A'}\n"
+        f"📚 **Total Results :** {total}\n"
+        f"📖 **Total Pages :** {offset+1}/{(total // 10) + 1}\n\n"
+        f"🔻 Tap on a file below and then start to download 🔻"
+    )
+
+    results.append(
+        InlineQueryResultArticle(
+            title=f"📊 Summary for {string or 'Query'}",
+            description=f"Results: {total} | Page: {offset+1}",
+            input_message_content=InputTextMessageContent(summary_caption),
+            reply_markup=reply_markup,
+        )
+    )
+
+    # --- Add File Results ---
     for file in files:
         title = file.file_name
         size = get_size(file.file_size)
@@ -96,7 +106,6 @@ async def answer(bot, query):
                 )
             except Exception as e:
                 logger.exception(e)
-                # keep original caption on format error
                 f_caption = f_caption
 
         if f_caption is None:
@@ -112,6 +121,7 @@ async def answer(bot, query):
             )
         )
 
+    # --- Return results ---
     if results:
         switch_pm_text = f"{emoji.FILE_FOLDER} Results - {total}"
         if string:
@@ -120,7 +130,7 @@ async def answer(bot, query):
             await query.answer(
                 results=results,
                 is_personal=True,
-                cache_time=0 if FORCE_FRESH_CACHE else cache_time,  # why: bypass cache while testing
+                cache_time=0 if FORCE_FRESH_CACHE else cache_time,
                 switch_pm_text=switch_pm_text,
                 switch_pm_parameter="start",
                 next_offset=str(next_offset),
@@ -144,14 +154,12 @@ async def answer(bot, query):
 
 
 def get_reply_markup(query: str) -> InlineKeyboardMarkup:
-    """Build per-result inline keyboard.
-    Contains a persistent channel URL button + a search-again helper.
-    """
+    """Keyboard: Channel button + Search again button"""
     buttons = [
         [
             InlineKeyboardButton(
                 "📚 HD MOVIES HUB 📚",
-                url="https://t.me/+KJHSwIdswKUwZjU1",  # replace with your channel if needed
+                url="https://t.me/+KJHSwIdswKUwZjU1",
             )
         ],
         [
@@ -161,6 +169,7 @@ def get_reply_markup(query: str) -> InlineKeyboardMarkup:
         ],
     ]
     return InlineKeyboardMarkup(buttons)
+
                 
     
 
